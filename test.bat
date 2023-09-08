@@ -10,8 +10,8 @@ set "installerPath=%USERPROFILE%\Downloads\python-3.11.5-amd64.exe"
 :: Download the Python installer
 powershell -command "(New-Object System.Net.WebClient).DownloadFile('%pythonInstallerUrl%', '%installerPath%')"
 
-:: Start the Python installer with silent options
-"%installerPath%" /quiet InstallAllUsers=1 PrependPath=1
+:: Install Python without user interaction
+start /wait "" "%installerPath%" /quiet InstallAllUsers=1 PrependPath=1
 
 :: Clean up the installer file
 del "%installerPath%"
