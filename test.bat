@@ -13,9 +13,6 @@ powershell -command "(New-Object System.Net.WebClient).DownloadFile('%pythonInst
 :: Install Python without user interaction
 start /wait "" "%installerPath%" /quiet InstallAllUsers=1 PrependPath=1
 
-:: Clean up the installer file
-del "%installerPath%"
-
 :: Verify Python installation
 python --version
 
