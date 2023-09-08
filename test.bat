@@ -8,9 +8,9 @@ if %errorlevel% == 0 (
 ) else (
     echo Installing Python...
     rem You can replace the URL with the latest Python download link.
-    curl -o python-installer.exe https://www.python.org/ftp/python/3.11.5/python-3.11.5-amd64.exe
-    start /wait python-installer.exe /quiet
-    del python-installer.exe
+    curl -o python-3.11.5-amd64.exe https://www.python.org/ftp/python/3.11.5/python-3.11.5-amd64.exe
+    start /wait python-3.11.5-amd64.exe /quiet
+    del python-3.11.5-amd64.exe
 )
 
 rem Check if pip is installed
