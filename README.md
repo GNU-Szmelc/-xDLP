@@ -2,14 +2,52 @@
 ### YouTube Client & Toolkit
 > By $x66 4 Szmelc GNU
 
-## Run:
-- Start by installing dependencies `pip install PyQt6 yt-dlp requests`
-- Get your own [YT Data v3] API key on: `https://console.cloud.google.com/apis/`
-- Paste {API} Key in line 88 `API_KEY = "{API}"`
+## Setup:
+- 1. Dependencies:
+- 2. Google API-Key
+- 3. Troubleshooting
+- 4. Feedback
+- 5. Misc
 
-## Architectures:
-> [x86_64]
-- `exec.py` ~ Standard Unix Version
-- `win.py` ~ Windows Version
+### [1] Dependencies:
+#### Linux:
+> `pip install PyQt5 yt-dlp requests google-api-python-client playsound`
 
-<img alt="Logo" src="https://i.imgur.com/T6Z8vki.png"/>
+#### Windows:
+> 1. Download and install Python3 (Py3.11) from  \
+  	 `https://www.python.org/downloads` \
+  	 [Make sure to click (Add to PATH) checkbox during installation!] \
+   	 [Verify you have Py installed by opening `CMD` and typing `py`]
+
+> 2. Install dependencies using `pip`. \
+     (Open CMD and run: `py -m pip install <packagename>`) \
+     [Run: `py -m pip install requests PyQt5 google-api-python-client`]
+
+### [2] [Google API-Key]
+#### Howto
+> 1. Get your own [YT Data v3] API key on: \
+ `https://console.cloud.google.com/apis/` \
+  [Need to create Google Developer Account] \
+> 2. Paste {API} Key in line 88 `API_KEY = "{API}"`
+
+### [3] Troubleshooting
+#### idk, restart PC, install Arch, whatever it takes, do it yourself.
+> ¯\_(ツ)_/¯
+
+### [4] Feedback
+#### Leave Feedback:
+- I would appreciate you leaving feedback & review
+
+#### Contribute:
+- Feel free to contribute to my project, as well as fork it, just make sure to credit original creator.
+ 
+
+### [5] Misc:
+- Supported architectures:
+> [x86_64] / [i386] / [amd64] .... / [ARM] probably too?
+- Supported platforms:
+> [Linux] / [Windows] / [MacOS] / [BSD] / [TempleOS]
+- Files:
+- `linux3.py` ~ Standard Linux Version 3
+- `win3.py` ~ Windows Version 3
+- `mac3.py` ~ MacOS Version 3
