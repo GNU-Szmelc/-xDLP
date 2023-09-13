@@ -2,6 +2,15 @@
 ### YouTube Client & Toolkit
 > By $x66 4 Szmelc GNU
 
+### v4 Features:
+> Playback in any local media player\
+> Better Layout\
+> Better Accesibility\
+> Customizable "blank" buttons\
+> Interchangeable default formats
+ 
+<img src="https://i.imgur.com/HT6zI3A.png" alt="image">
+
 ## Setup:
 - 1. Dependencies:
 - 2. Google API-Key
