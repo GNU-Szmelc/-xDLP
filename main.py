@@ -1,10 +1,12 @@
 #!/usr/bin/python3
-# Simple app to search on youtube
+# Simple app to search on YouTube
 # With playlists and player capabilities!
+# Probably even crossplatform!
 
 import os
 import sys
 import subprocess
+import platform
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit,
     QPushButton, QFileDialog, QListWidget, QListWidgetItem
@@ -15,7 +17,7 @@ from googleapiclient.discovery import build
 import requests
 
 # API Key
-api_key = "API-KEY-FOR-YT-DATA-V3"
+api_key = "AIzaSyCSVVoqQohX0L7BUIfyitjF9GrOgpA1MTE"
 
 # SETTINGS
 maxresults = 20
@@ -27,6 +29,18 @@ mpc = "--play-and-exit"
 defaud, defvid = "mp3", "mp4"
 b1n, b2n = "Play Fullscreen", "Play Audio"
 
+# Detect Platform
+current_os = platform.system()
+is_windows = current_os == "Windows"
+is_mac = current_os == "Darwin"
+is_linux = current_os == "Linux"
+
+# Cross-platform command helper
+def run_command(command):
+    if is_windows:
+        subprocess.run(command, shell=True)
+    else:
+        os.system(command)
 
 # Install google-api-client if not present
 try:
@@ -71,8 +85,6 @@ class YTDLPInterface(QWidget):
         # Search Button
         self.search_button = QPushButton('Choose Directory')
         self.search_button.clicked.connect(self.select_directory)
-        self.choose_directory_button = QPushButton('Choose Directory')
-        self.choose_directory_button.clicked.connect(self.select_directory)
         vbox.addWidget(self.search_button)
 
         # Thumbnail Display
@@ -82,7 +94,8 @@ class YTDLPInterface(QWidget):
 
         # Search Results
         self.search_results = QListWidget()
-        self.search_results.itemClicked.connect(self.clicked_item_changed)  # Single click to load URL
+        self.search_results.itemClicked.connect(self.clicked_item_changed)
+        self.search_results.currentRowChanged.connect(self.update_item_details)
         vbox.addWidget(self.search_results)
 
         # Bottom Buttons - Row 1
@@ -124,17 +137,22 @@ class YTDLPInterface(QWidget):
     # Custom Button Actions
     def custom_button1_action(self):
         url = self.url_input.text()
-        os.system(f'{mp} --fs "{url}"')
+        if is_windows:
+            run_command(f'start {mp} --fs "{url}"')
+        elif is_mac:
+            run_command(f'open -a {mp} --args --fs "{url}"')
+        else:  # Linux
+            run_command(f'{mp} --fs "{url}"')
 
     def custom_button2_action(self):
         url = self.url_input.text()
-        os.system(f'{mp} --no-video "{url}"')
+        if is_windows:
+            run_command(f'start {mp} --no-video "{url}"')
+        elif is_mac:
+            run_command(f'open -a {mp} --args --no-video "{url}"')
+        else:  # Linux
+            run_command(f'{mp} --no-video "{url}"')
 
-    def custom_button3_action(self):
-        url = self.url_input.text()
-        os.system(f'{mp} --playlist="{url}"')
-
-    # Directory Selection
     def select_directory(self):
         directory = QFileDialog.getExistingDirectory(self, "Select Directory")
         if directory:
@@ -143,7 +161,10 @@ class YTDLPInterface(QWidget):
     def run_ytdlp_command(self, args):
         if self.selected_directory:
             args.extend(["-o", f"{self.selected_directory}/%(title)s.%(ext)s"])
-        subprocess.call(args)
+        if is_windows:
+            subprocess.run(args, shell=True)
+        else:
+            subprocess.call(args)
 
     # Search YouTube
     def search_youtube(self):
@@ -178,12 +199,17 @@ class YTDLPInterface(QWidget):
 
     def clicked_item_changed(self, clicked_item):
         if clicked_item:
+            current_row = self.search_results.row(clicked_item)
+            self.update_item_details(current_row)
+
+    def update_item_details(self, current_row):
+        if current_row >= 0:  # Ensure the row index is valid
+            clicked_item = self.search_results.item(current_row)
             video_url = clicked_item.data(32)
             self.url_input.setText(video_url)
 
-            # Display thumbnail
-            index = self.search_results.row(clicked_item)
-            thumbnail_url = self.thumbnail_urls[index]
+            # Display the thumbnail
+            thumbnail_url = self.thumbnail_urls[current_row]
             response = requests.get(thumbnail_url)
             pixmap = QPixmap()
             pixmap.loadFromData(response.content)
