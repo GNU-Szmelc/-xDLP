@@ -1,4 +1,4 @@
-# $xDLP
+# $xDLP v2.0
 ### YouTube Client & Toolkit
 > By $x66 4 Szmelc GNU
 
@@ -8,6 +8,10 @@
 > Better Accesibility\
 > Customizable "blank" buttons\
 > Interchangeable default formats
+
+## New Layout!
+![image](https://github.com/user-attachments/assets/ff1edc68-4e77-4abd-8e2a-15bd95f8d82e)
+
 
 ### Note:
 > Thanks to everyone letting me know I left my private key in prod. \
